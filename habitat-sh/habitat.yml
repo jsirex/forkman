@@ -1,0 +1,53 @@
+---
+
+patterns:
+  # Most uniq patterns should go first
+
+  # Keep Original Sites
+  # www.habitat.sh: www.habitat.sh
+  bldr.habitat.sh: bldr.habitat.sh
+
+  # Keep Blog Posts
+  https://starkandwayne.com/blog/habitat-to-cloud-foundry/: https://starkandwayne.com/blog/habitat-to-cloud-foundry/
+
+  # Keep Original GitHub Issues, PRs, Apps
+  github.com/habitat-sh/habitat/issues: github.com/habitat-sh/habitat/issues
+  github.com/habitat-sh/habitat/pull: github.com/habitat-sh/habitat/pull
+  https://github.com/apps/habitat-builder: https://github.com/apps/habitat-builder
+
+  # Currently don't touch bintray
+  https://api.bintray.com/content/habitat: https://api.bintray.com/content/habitat
+  https://api.bintray.com/packages/habitat: https://api.bintray.com/packages/habitat
+
+  The Habitat Maintainers: The Biome Maintainers
+
+  # Github Source
+  https://github.com/habitat-sh/habitat: https://github.com/biome-sh/biome
+  https://raw.githubusercontent.com/habitat-sh/habitat/: https://raw.githubusercontent.com/biome-sh/biome/
+  'github.com:habitat-sh/habitat': 'github.com:biome-sh/biome'
+
+
+  # PATH
+  ~/habitat: ~/biome
+
+  hab.exe: bio.exe
+  HabShared: BioShared
+  $baseHabExe: $baseBioExe
+  hab-$targetVersion-x86_64-windows: bio-$targetVersion-x86_64-windows
+
+  hab-plan-build: bio-plan-build
+  components/hab: components/bio
+
+  brew "hab": brew "bio"
+
+  # Still danger
+  /bin/hab: /bin/bio
+
+  # Avoid general replacements until other patterns done
+  #Habitat: Biome
+  #habitat: biome
+  #hab: bio
+
+
+excludes:
+  - components/core/tests/fixtures/unhappyhumans-possums-8.1.4-20160427165340-x86_64-linux.hart
