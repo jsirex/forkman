@@ -1,6 +1,6 @@
 # ForkMan
 
-This script helps you to refactor whole repositories by replacing all tokens using user defined directory
+This script helps you to refactor whole repositories by replacing all tokens using user defined dictionary.
 
 # How it works
 
@@ -32,3 +32,7 @@ I want to preserve original site: www.biome.sh
 But replace this biome with new name
 And use new bio binary
 ```
+
+# ORDER
+
+**Dictionary order is important!**

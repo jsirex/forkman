@@ -34,13 +34,18 @@ class ForkMan
 
     yaml = YAML.load_file(File.expand_path(config[:config]))
 
-    config[:patterns] = yaml['patterns'].to_a
-    config[:excludes] = yaml['excludes']
+    config[:patterns] = (yaml['patterns'] || {}).to_a
+    config[:excludes] = yaml['excludes'] || []
+    config[:deletes] = yaml['deletes'] || []
 
     Dir.chdir(config[:repo]) do
+      FileUtils.rm_rf(config[:deletes]) unless config[:deletes].empty?
       translate_filenames
       translate_contents
     end
+
+    word, translate = config[:patterns][config[:steps] - 1]
+    puts "Last applied: #{word} -> #{translate}."
   end
 
   def translate_filenames
