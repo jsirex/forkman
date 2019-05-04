@@ -48,6 +48,10 @@ patterns:
   ':habicat:': ':habicat:'
   ':hab:': ':bio:'
 
+  # Docker Studios (biome org has already taken. use biomesh)
+  'const DOCKER_IMAGE: &str = "habitat/default-studio"': 'const DOCKER_IMAGE: &str = "biomesh/default-studio"'
+  'const DOCKER_WINDOWS_IMAGE: &str = "habitat-docker-registry.bintray.io/win-studio"' :'biomesh/win-studio'
+
   # Make plans use habitat
   habitat/plan.sh: habitat/plan.sh
   habitat/x86_64-darwin/plan.sh: habitat/x86_64-darwin/plan.sh
