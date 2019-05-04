@@ -150,16 +150,27 @@ patterns:
 
 # Delete some files which safe to ignore
 deletes:
-  # Temporary
+  # We're not going to support public site now
   - www
+
+  # Silence mentions
   - .mailmap
   - .mention-bot
+  - CODEOWNERS
+
+  # Development will go in upstream
   - CHANGELOG.md
+  - CONTRIBUTING.md
+  - MAINTAINERS.md
+  - RELEASE.md
+
+  # Remove stock travis and other ci-s
+  - .travis.yml
+  - .buildkite
+  - .expeditor
 
 # Excludes from patching contents
 excludes:
-  - CONTRIBUTING.md
-  - MAINTAINERS.md
   - components/core/tests/fixtures/unhappyhumans-possums-8.1.4-20160427165340-x86_64-linux.hart
   - www/source/blog/media/2018-08-18-lift-and-shift-bio/run_tar_ubuntu_vm.png
   - www/source/downloads/bio.gz
