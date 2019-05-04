@@ -7,6 +7,8 @@ patterns:
   # Keep Original Sites
   # www.habitat.sh: www.habitat.sh
   bldr.habitat.sh: bldr.habitat.sh
+  forums.habitat.sh: forums.habitat.sh
+  slack.habiat.sh: slack.habitat.sh
 
   # Keep Original GitHub Issues, PRs, Apps
   github.com/habitat-sh/habitat/issues: github.com/habitat-sh/habitat/issues
@@ -25,9 +27,14 @@ patterns:
   habitat-sh/ipc-channel: habitat-sh/ipc-channel
   habitat-sh/nitox: habitat-sh/nitox
   habitat-sh/core-plans: habitat-sh/core-plans
-  https://github.com/habitat-sh/habitat: https://github.com/biome-sh/biome
-  https://raw.githubusercontent.com/habitat-sh/habitat/: https://raw.githubusercontent.com/biome-sh/biome/
-  'github.com:habitat-sh/habitat': 'github.com:biome-sh/biome'
+
+  # Temporary stick with mine repo
+  https://github.com/habitat-sh/habitat: https://github.com/jsirex/biome
+  https://raw.githubusercontent.com/habitat-sh/habitat/: https://raw.githubusercontent.com/jsirex/biome/
+  'github.com:habitat-sh/habitat': 'github.com:jsirex/biome'
+  # https://github.com/habitat-sh/habitat: https://github.com/biome-sh/biome
+  # https://raw.githubusercontent.com/habitat-sh/habitat/: https://raw.githubusercontent.com/biome-sh/biome/
+  # 'github.com:habitat-sh/habitat': 'github.com:biome-sh/biome'
 
   # Remove chef licenses checks from OSS Version
   'license::accept_license(ui)?;': ''
@@ -51,6 +58,7 @@ patterns:
   # Docker Studios (biome org has already taken. use biomesh)
   'const DOCKER_IMAGE: &str = "habitat/default-studio"': 'const DOCKER_IMAGE: &str = "biomesh/default-studio"'
   'const DOCKER_WINDOWS_IMAGE: &str = "habitat-docker-registry.bintray.io/win-studio"': 'biomesh/win-studio'
+  habitat/devshell: biomesh/devshell
 
   # Make plans use habitat
   habitat/plan.sh: habitat/plan.sh
@@ -67,16 +75,15 @@ patterns:
   'rootfs.join("hab")': 'rootfs.join("hab")'
   'HAB_ROOT_PATH:=/hab': 'HAB_ROOT_PATH:=/hab'
 
-  # Prevent multiple substitutions by slighty changing line
   # Add hab user
   'echo "${run_user}:x:42:42:root:/:/bin/sh" >> "$HAB_STUDIO_ROOT"/etc/passwd': |
-    echo "${run_user}:x:42:42:root:/:/bin/sh"  >> "$HAB_STUDIO_ROOT"/etc/passwd
-    echo "hab:x:43:43:root:/:/bin/sh"  >> "$HAB_STUDIO_ROOT"/etc/passwd
+    echo "${run_user}:x:42:42:root:/:/bin/sh" >> "$HAB_STUDIO_ROOT"/etc/passwd
+    echo "hab:x:43:43:root:/:/bin/sh" >> "$HAB_STUDIO_ROOT"/etc/passwd
 
   # Add hab group
   'echo "${run_group}:x:42:${run_user}" >> "$HAB_STUDIO_ROOT"/etc/group': |
-    echo "${run_group}:x:42:${run_user}"  >> "$HAB_STUDIO_ROOT"/etc/group
-    echo "hab:x:43:hab"  >> "$HAB_STUDIO_ROOT"/etc/group
+    echo "${run_group}:x:42:${run_user}" >> "$HAB_STUDIO_ROOT"/etc/group
+    echo "hab:x:43:hab" >> "$HAB_STUDIO_ROOT"/etc/group
 
   Habitat: Biome
   habitat: biome
@@ -159,10 +166,12 @@ deletes:
   - CODEOWNERS
 
   # Development will go in upstream
+  # - README.md
   - CHANGELOG.md
   - CONTRIBUTING.md
   - MAINTAINERS.md
   - RELEASE.md
+  - .github
 
   # Remove stock travis and other ci-s
   - .travis.yml
