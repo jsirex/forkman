@@ -50,7 +50,10 @@ patterns:
 
   # Make plans use habitat
   habitat/plan.sh: habitat/plan.sh
+  habitat/x86_64-darwin/plan.sh: habitat/x86_64-darwin/plan.sh
   habitat/plan.ps1: habitat/plan.ps1
+  PLAN_CONTEXT/habitat: PLAN_CONTEXT/habitat
+  PLAN_CONTEXT\habitat: PLAN_CONTEXT\\habitat
   rootfs/hab: rootfs/hab
   # from test only
   '            .join("hab")': '            .join("hab")'
@@ -58,6 +61,17 @@ patterns:
   'Path::new(&*FS_ROOT_PATH).join("hab")': 'Path::new(&*FS_ROOT_PATH).join("hab")'
   'rootfs.join("hab")': 'rootfs.join("hab")'
   'HAB_ROOT_PATH:=/hab': 'HAB_ROOT_PATH:=/hab'
+
+  # Prevent multiple substitutions by slighty changing line
+  # Add hab user
+  'echo "${run_user}:x:42:42:root:/:/bin/sh" >> "$HAB_STUDIO_ROOT"/etc/passwd': |
+          echo "${run_user}:x:42:42:root:/:/bin/sh"  >> "$HAB_STUDIO_ROOT"/etc/passwd
+          echo "hab:x:43:43:root:/:/bin/sh"  >> "$HAB_STUDIO_ROOT"/etc/passwd
+
+  'echo "${run_group}:x:42:${run_user}" >> "$HAB_STUDIO_ROOT"/etc/group': |
+          echo "${run_group}:x:42:${run_user}"  >> "$HAB_STUDIO_ROOT"/etc/group
+          echo "hab:x:43:hab"  >> "$HAB_STUDIO_ROOT"/etc/group
+
 
   Habitat: Biome
   habitat: biome
@@ -70,12 +84,14 @@ patterns:
   hab/svc: hab/svc
   hab/pkgs: hab/pkgs
   hab/cache: hab/cache
+  hab/studios: hab/studios
 
   hab\launcher: hab\\launcher
   hab\sup: hab\\sup
   hab\svc: hab\\svc
   hab\pkgs: hab\\pkgs
   hab\cache: hab\\cache
+  hab\studios: hab\\studios
 
   # Translate all habs beacause
   # Replacing hab -> bio is danger (word `unreachable` will be `unreacbiole` )
