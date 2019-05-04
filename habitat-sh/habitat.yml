@@ -79,6 +79,7 @@ patterns:
   Habiat: Biome
 
   # Make some biome path compatible
+  hab/etc: hab/etc
   hab/launcher: hab/launcher
   hab/sup: hab/sup
   hab/svc: hab/svc
@@ -86,6 +87,8 @@ patterns:
   hab/cache: hab/cache
   hab/studios: hab/studios
 
+  # Also windows
+  hab\etc: hab\\etc
   hab\launcher: hab\\launcher
   hab\sup: hab\\sup
   hab\svc: hab\\svc
@@ -97,7 +100,6 @@ patterns:
   # Replacing hab -> bio is danger (word `unreachable` will be `unreacbiole` )
   hab/: bio/
   hab\\: bio\\\\
-
 
   # Assigments
   =hab: =bio
