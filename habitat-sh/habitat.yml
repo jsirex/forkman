@@ -67,6 +67,8 @@ patterns:
   PLAN_CONTEXT/habitat: PLAN_CONTEXT/habitat
   PLAN_CONTEXT\habitat: PLAN_CONTEXT\\habitat
   rootfs/hab: rootfs/hab
+  pkg_svc_user=hab: pkg_svc_user=hab
+  'pkg_svc_user="hab"': 'pkg_svc_user="hab"'
 
   # Preserve path joining
   '            .join("hab")': '            .join("hab")'
@@ -75,15 +77,25 @@ patterns:
   'rootfs.join("hab")': 'rootfs.join("hab")'
   'HAB_ROOT_PATH:=/hab': 'HAB_ROOT_PATH:=/hab'
 
-  # Add hab user
+  # Add hab user into studio
   'echo "${run_user}:x:42:42:root:/:/bin/sh" >> "$HAB_STUDIO_ROOT"/etc/passwd': |
-    echo "${run_user}:x:42:42:root:/:/bin/sh" >> "$HAB_STUDIO_ROOT"/etc/passwd
-      echo "hab:x:43:43:root:/:/bin/sh" >> "$HAB_STUDIO_ROOT"/etc/passwd
+    echo "${run_user}:x:43:43:root:/:/bin/sh" >> "$HAB_STUDIO_ROOT"/etc/passwd
+      echo "hab:x:42:42:root:/:/bin/sh" >> "$HAB_STUDIO_ROOT"/etc/passwd
 
-  # Add hab group
+  # Add hab group into studio
   'echo "${run_group}:x:42:${run_user}" >> "$HAB_STUDIO_ROOT"/etc/group': |
-    echo "${run_group}:x:42:${run_user}" >> "$HAB_STUDIO_ROOT"/etc/group
-      echo "hab:x:43:hab" >> "$HAB_STUDIO_ROOT"/etc/group
+    echo "${run_group}:x:43:${run_user}" >> "$HAB_STUDIO_ROOT"/etc/group
+      echo "hab:x:42:hab" >> "$HAB_STUDIO_ROOT"/etc/group
+
+  # Add hab user into docker studio:
+  'hab:x:42:42:root:/:/bin/sh': |
+    bio:x:43:43:root:/:/bin/sh
+    hab:x:42:42:root:/:/bin/sh
+
+  # Add hab group into docker studio:
+  'hab:x:42:hab': |
+    bio:x:43:bio
+    hab:x:42:hab
 
   Habitat: Biome
   habitat: biome
@@ -91,6 +103,7 @@ patterns:
   Habiat: Biome
 
   # Make some biome path compatible
+  hab/bin: hab/bin
   hab/etc: hab/etc
   hab/launcher: hab/launcher
   hab/sup: hab/sup
@@ -100,6 +113,7 @@ patterns:
   hab/studios: hab/studios
 
   # Also windows
+  hab\bin: hab\\bin
   hab\etc: hab\\etc
   hab\launcher: hab\\launcher
   hab\sup: hab\\sup
