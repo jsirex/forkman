@@ -55,7 +55,8 @@ patterns:
   PLAN_CONTEXT/habitat: PLAN_CONTEXT/habitat
   PLAN_CONTEXT\habitat: PLAN_CONTEXT\\habitat
   rootfs/hab: rootfs/hab
-  # from test only
+
+  # Preserve path joining
   '            .join("hab")': '            .join("hab")'
 
   'Path::new(&*FS_ROOT_PATH).join("hab")': 'Path::new(&*FS_ROOT_PATH).join("hab")'
@@ -65,13 +66,13 @@ patterns:
   # Prevent multiple substitutions by slighty changing line
   # Add hab user
   'echo "${run_user}:x:42:42:root:/:/bin/sh" >> "$HAB_STUDIO_ROOT"/etc/passwd': |
-          echo "${run_user}:x:42:42:root:/:/bin/sh"  >> "$HAB_STUDIO_ROOT"/etc/passwd
-          echo "hab:x:43:43:root:/:/bin/sh"  >> "$HAB_STUDIO_ROOT"/etc/passwd
+    echo "${run_user}:x:42:42:root:/:/bin/sh"  >> "$HAB_STUDIO_ROOT"/etc/passwd
+    echo "hab:x:43:43:root:/:/bin/sh"  >> "$HAB_STUDIO_ROOT"/etc/passwd
 
+  # Add hab group
   'echo "${run_group}:x:42:${run_user}" >> "$HAB_STUDIO_ROOT"/etc/group': |
-          echo "${run_group}:x:42:${run_user}"  >> "$HAB_STUDIO_ROOT"/etc/group
-          echo "hab:x:43:hab"  >> "$HAB_STUDIO_ROOT"/etc/group
-
+    echo "${run_group}:x:42:${run_user}"  >> "$HAB_STUDIO_ROOT"/etc/group
+    echo "hab:x:43:hab"  >> "$HAB_STUDIO_ROOT"/etc/group
 
   Habitat: Biome
   habitat: biome
