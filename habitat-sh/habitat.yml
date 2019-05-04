@@ -78,12 +78,12 @@ patterns:
   # Add hab user
   'echo "${run_user}:x:42:42:root:/:/bin/sh" >> "$HAB_STUDIO_ROOT"/etc/passwd': |
     echo "${run_user}:x:42:42:root:/:/bin/sh" >> "$HAB_STUDIO_ROOT"/etc/passwd
-    echo "hab:x:43:43:root:/:/bin/sh" >> "$HAB_STUDIO_ROOT"/etc/passwd
+      echo "hab:x:43:43:root:/:/bin/sh" >> "$HAB_STUDIO_ROOT"/etc/passwd
 
   # Add hab group
   'echo "${run_group}:x:42:${run_user}" >> "$HAB_STUDIO_ROOT"/etc/group': |
     echo "${run_group}:x:42:${run_user}" >> "$HAB_STUDIO_ROOT"/etc/group
-    echo "hab:x:43:hab" >> "$HAB_STUDIO_ROOT"/etc/group
+      echo "hab:x:43:hab" >> "$HAB_STUDIO_ROOT"/etc/group
 
   Habitat: Biome
   habitat: biome
@@ -166,7 +166,7 @@ deletes:
   - CODEOWNERS
 
   # Development will go in upstream
-  # - README.md
+  - README.md
   - CHANGELOG.md
   - CONTRIBUTING.md
   - MAINTAINERS.md
