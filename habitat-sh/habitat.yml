@@ -29,12 +29,13 @@ patterns:
   habitat-sh/core-plans: habitat-sh/core-plans
 
   # Temporary stick with mine repo
-  https://github.com/habitat-sh/habitat: https://github.com/jsirex/biome
-  https://raw.githubusercontent.com/habitat-sh/habitat/: https://raw.githubusercontent.com/jsirex/biome/
-  'github.com:habitat-sh/habitat': 'github.com:jsirex/biome'
-  # https://github.com/habitat-sh/habitat: https://github.com/biome-sh/biome
-  # https://raw.githubusercontent.com/habitat-sh/habitat/: https://raw.githubusercontent.com/biome-sh/biome/
-  # 'github.com:habitat-sh/habitat': 'github.com:biome-sh/biome'
+  # https://github.com/habitat-sh/habitat: https://github.com/jsirex/biome
+  # https://raw.githubusercontent.com/habitat-sh/habitat/: https://raw.githubusercontent.com/jsirex/biome/
+  # 'github.com:habitat-sh/habitat': 'github.com:jsirex/biome'
+  # Use our new org!
+  https://github.com/habitat-sh/habitat: https://github.com/biome-sh/biome
+  https://raw.githubusercontent.com/habitat-sh/habitat/: https://raw.githubusercontent.com/biome-sh/biome/
+  'github.com:habitat-sh/habitat': 'github.com:biome-sh/biome'
 
   # Remove chef licenses checks from OSS Version
   'license::accept_license(ui)?;': ''
