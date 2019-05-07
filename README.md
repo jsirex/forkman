@@ -33,6 +33,11 @@ But replace this biome with new name
 And use new bio binary
 ```
 
+# Usage Example
+
+There example script - `patch-project.sh`. It shows how possible to make a "hard-update" of new changes. It reverts local changes in stage area, so you should be carefull and re-revert our changes back.
+If you want safer patch you should probably commit changes in the `$FORKMAN_PATCH_BRANCH` and cherry-pick them to `$FORKMAN_MAIN_BRANCH`.
+
 # ORDER
 
 **Dictionary order is important!**
