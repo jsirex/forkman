@@ -62,7 +62,7 @@ patterns:
 
   # Make plans use habitat
   habitat/plan.sh: habitat/plan.sh
-  habitat/x86_64-darwin/plan.sh: habitat/x86_64-darwin/plan.sh
+  habitat/x86_64-darwin: habitat/x86_64-darwin
   habitat/plan.ps1: habitat/plan.ps1
   PLAN_CONTEXT/habitat: PLAN_CONTEXT/habitat
   PLAN_CONTEXT\habitat: PLAN_CONTEXT\\habitat
