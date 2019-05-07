@@ -67,6 +67,7 @@ patterns:
   PLAN_CONTEXT/habitat: PLAN_CONTEXT/habitat
   PLAN_CONTEXT\habitat: PLAN_CONTEXT\\habitat
   rootfs/hab: rootfs/hab
+  FS_ROOT/hab: FS_ROOT/hab
   pkg_svc_user=hab: pkg_svc_user=hab
   'pkg_svc_user="hab"': 'pkg_svc_user="hab"'
 
