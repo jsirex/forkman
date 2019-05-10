@@ -41,7 +41,7 @@ git reset --hard HEAD
 git clean -fdx
 
 echo "Making patch branch: $FORKMAN_PATCH_BRANCH"
-git checkout -b "$FORKMAN_PATCH_BRANCH" "$FORKMAN_UPSTREAM_BRANCH"
+git checkout -B "$FORKMAN_PATCH_BRANCH" "$FORKMAN_UPSTREAM_BRANCH"
 
 popd > /dev/null
 
