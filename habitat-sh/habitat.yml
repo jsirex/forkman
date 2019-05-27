@@ -39,6 +39,7 @@ patterns:
 
   # Remove chef licenses checks from OSS Version
   'license::accept_license(ui)?;': ''
+  'if license_exists() ': 'if true '
   'license::check_for_license_acceptance_and_prompt(ui)?;': ''
 
   # Translate constants
@@ -78,6 +79,10 @@ patterns:
   'Path::new(&*FS_ROOT_PATH).join("hab")': 'Path::new(&*FS_ROOT_PATH).join("hab")'
   'rootfs.join("hab")': 'rootfs.join("hab")'
   'HAB_ROOT_PATH:=/hab': 'HAB_ROOT_PATH:=/hab'
+  'pub const ROOT_PATH: &str = "hab";': 'pub const ROOT_PATH: &str = "hab";'
+
+  # After replacement all occurances hab_pkgs_path will be bio_pkgs_path
+  'tar_builder.append_dir_all("hab", hab_pkgs_path);': 'tar_builder.append_dir_all("hab", bio_pkgs_path);'
 
   # Add hab user into studio
   'echo "${run_user}:x:42:42:root:/:/bin/sh" >> "$HAB_STUDIO_ROOT"/etc/passwd': |
@@ -123,6 +128,16 @@ patterns:
   hab\pkgs: hab\\pkgs
   hab\cache: hab\\cache
   hab\studios: hab\\studios
+
+  # Double slash in quotes translate too
+  hab\\bin: hab\\\\bin
+  hab\\etc: hab\\\\etc
+  hab\\launcher: hab\\\\launcher
+  hab\\sup: hab\\\\sup
+  hab\\svc: hab\\\\svc
+  hab\\pkgs: hab\\\\pkgs
+  hab\\cache: hab\\\\cache
+  hab\\studios: hab\\\\studios
 
   # Translate all habs beacause
   # Replacing hab -> bio is danger (word `unreachable` will be `unreacbiole` )
