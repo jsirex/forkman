@@ -28,6 +28,11 @@ class ForkMan
     proc: ->(x) { Integer(x) },
     description: 'How many patterns to apply. Default: 1_000_000'
 
+  option :preserve_tokens,
+    long: '--[no-]preserve-tokens',
+    boolean: true,
+    default: false,
+    description: 'Stop translating and leave tokens'
 
   def run
     parse_options
@@ -109,7 +114,13 @@ class ForkMan
       return if index >= config[:steps]
 
       token = "TOKEN_%07d" % index
-      yield(pattern[0], pattern[1], token)
+
+      # For debug preserve tokens otherwise - replace
+      if config[:preserve_tokens]
+        yield(pattern[0], token, token)
+      else
+        yield(pattern[0], pattern[1], token)
+      end
     end
   end
 end
