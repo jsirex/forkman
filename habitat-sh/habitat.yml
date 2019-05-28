@@ -5,7 +5,7 @@
 patterns:
 
   # Keep Original Sites
-  # www.habitat.sh: www.habitat.sh
+  www.habitat.sh: www.habitat.sh
   bldr.habitat.sh: bldr.habitat.sh
   forums.habitat.sh: forums.habitat.sh
   slack.habiat.sh: slack.habitat.sh
@@ -77,12 +77,18 @@ patterns:
   '            .join("hab")': '            .join("hab")'
 
   'Path::new(&*FS_ROOT_PATH).join("hab")': 'Path::new(&*FS_ROOT_PATH).join("hab")'
+  'PathBuf::from(&*FS_ROOT_PATH).join("hab")': 'PathBuf::from(&*FS_ROOT_PATH).join("hab")'
   'rootfs.join("hab")': 'rootfs.join("hab")'
   'HAB_ROOT_PATH:=/hab': 'HAB_ROOT_PATH:=/hab'
   'pub const ROOT_PATH: &str = "hab";': 'pub const ROOT_PATH: &str = "hab";'
 
   # After replacement all occurances hab_pkgs_path will be bio_pkgs_path
   'tar_builder.append_dir_all("hab", hab_pkgs_path);': 'tar_builder.append_dir_all("hab", bio_pkgs_path);'
+
+  # TODO: Supervisor compatibility?? Must be applied both lines
+  # 'const HABITAT_SUBJECT: &str = "habitat";': 'const HABITAT_SUBJECT: &str = "habitat";'
+  # 'let topic = "habitat".to_string();': 'let topic = "habitat".to_string();'
+
 
   # Add hab user into studio
   'echo "${run_user}:x:42:42:root:/:/bin/sh" >> "$HAB_STUDIO_ROOT"/etc/passwd': |
@@ -139,9 +145,13 @@ patterns:
   hab\\cache: hab\\\\cache
   hab\\studios: hab\\\\studios
 
+  hab/hab: bio/bio
+  ' hab ': ' bio '
+
   # Translate all habs beacause
   # Replacing hab -> bio is danger (word `unreachable` will be `unreacbiole` )
   hab/: bio/
+  hab\: bio\\
   hab\\: bio\\\\
 
   # Assigments
@@ -153,14 +163,6 @@ patterns:
 
   # Relative path
   ../hab: ../bio
-  .hab: .bio
-
-  # String occurances
-  '"hab"': '"bio"'
-  "'hab'": "'bio'"
-  ' hab': ' bio'
-  # Not always works somewhy?
-  '`hab': '`bio'
 
   # Variables
   _hab: _bio
@@ -169,22 +171,29 @@ patterns:
   hab-: bio-
   '&hab': '&bio'
   '$hab': '$bio'
+  '${hab}': '${bio}'
 
-  hab/hab: bio/bio
   /hab: /bio
   bin/hab: bin/bio
   'use hab': 'use bio'
   'hab::': 'bio::'
 
+  # String occurances
+  '"hab"': '"bio"'
+  "'hab'": "'bio'"
+  ' hab': ' bio'
+  # Not always works somewhy?
+  '`hab': '`bio'
+
+
   'hab ': 'bio '
-  '$hab': '$bio'
-  '${hab}': '${bio}'
 
   'hab:': 'bio:'
   hab\: bio\\
   \hab: \\bio
   ':hab': ':bio'
   '[hab]': '[bio]'
+  .hab: .bio
 
 # Delete some files which safe to ignore
 deletes:
