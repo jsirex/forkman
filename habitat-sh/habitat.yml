@@ -85,9 +85,9 @@ patterns:
   # After replacement all occurances hab_pkgs_path will be bio_pkgs_path
   'tar_builder.append_dir_all("hab", hab_pkgs_path);': 'tar_builder.append_dir_all("hab", bio_pkgs_path);'
 
-  # TODO: Supervisor compatibility?? Must be applied both lines
-  # 'const HABITAT_SUBJECT: &str = "habitat";': 'const HABITAT_SUBJECT: &str = "habitat";'
-  # 'let topic = "habitat".to_string();': 'let topic = "habitat".to_string();'
+  # Supervisor compatibility habitat <-> biome
+  'const HABITAT_SUBJECT: &str = "habitat";': 'const HABITAT_SUBJECT: &str = "habitat";'
+  'let topic = "habitat".to_string();': 'let topic = "habitat".to_string();'
 
 
   # Add hab user into studio
@@ -109,6 +109,12 @@ patterns:
   'hab:x:42:hab': |
     bio:x:43:bio
     hab:x:42:hab
+
+  # tools / sup network
+  'RUN useradd --user-group hab': |
+    RUN useradd --user-group hab
+    RUN useradd --user-group bio
+
 
   Habitat: Biome
   habitat: biome
