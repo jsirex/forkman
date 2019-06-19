@@ -3,8 +3,8 @@
 FORKMAN_CONFIG="$1"
 FORKMAN_REPO="$2"
 FORKMAN_UPSTREAM_BRANCH="$3"
+FORKMAN_MAIN_BRANCH="${4:-forkman-raw}"
 FORKMAN_PATCH_BRANCH="forkman-$(date +%F)"
-FORKMAN_MAIN_BRANCH="${4:-master}"
 
 if [ $# -eq 0 ]; then
     echo "Usage: $0 FORKMAN-CONFIG FORKMAN-REPO FORKMAN-UPSTREAM-BRANCH [FORKMAN-MAIN-BRANCH]"
@@ -40,7 +40,7 @@ echo "Resetting index and cleaning"
 git reset --hard HEAD
 git clean -fdx
 
-echo "Making patch branch: $FORKMAN_PATCH_BRANCH"
+# echo "Making patch branch: $FORKMAN_PATCH_BRANCH"
 git checkout -B "$FORKMAN_PATCH_BRANCH" "$FORKMAN_UPSTREAM_BRANCH"
 
 popd > /dev/null
@@ -50,19 +50,21 @@ ruby forkman.rb --config "$FORKMAN_CONFIG" --repo "$FORKMAN_REPO"
 # ruby forkman.rb --config "$FORKMAN_CONFIG" --repo "$FORKMAN_REPO" --preserve-tokens --steps 105
 
 pushd "$FORKMAN_REPO" > /dev/null
-git add -u
 
 echo "Rework patches on main branch: $FORKMAN_MAIN_BRANCH"
-echo "WARN: This reverts all incorparated changes done by hands and uses stock patched repo"
-echo "WARN: Be careful now and preserve communities' changes"
-git reset --soft "$FORKMAN_MAIN_BRANCH"
+echo "WARN: This branch is expected to keep clean and raw"
+git reset "$FORKMAN_MAIN_BRANCH"
 
-echo "Now investigate changes and create commits. When ready press enter"
-read
+echo "We are on clean state so safe to add literally everything"
+git add .
 
+git commit -m "Backport $FORKMAN_UPSTREAM_BRANCH at $(git rev-parse "$FORKMAN_UPSTREAM_BRANCH")"
 git checkout "$FORKMAN_MAIN_BRANCH"
-git merge "$FORKMAN_PATCH_BRANCH"
+
+# Should be always fast-forward
+git merge --ff-only "$FORKMAN_PATCH_BRANCH"
 git branch -D "$FORKMAN_PATCH_BRANCH"
+
 popd > /dev/null
 
-echo "Done!"
+echo "$FORKMAN_MAIN_BRANCH was built."

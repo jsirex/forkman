@@ -212,8 +212,6 @@ deletes:
   - CODEOWNERS
 
   # Development will go in upstream
-  - README.md
-  - CHANGELOG.md
   - CONTRIBUTING.md
   - MAINTAINERS.md
   - RELEASE.md
@@ -226,9 +224,6 @@ deletes:
 
 # Excludes from patching contents
 excludes:
+  - README.md
+  - CHANGELOG.md
   - components/core/tests/fixtures/unhappyhumans-possums-8.1.4-20160427165340-x86_64-linux.hart
-  - www/source/blog/media/2018-08-18-lift-and-shift-bio/run_tar_ubuntu_vm.png
-  - www/source/downloads/bio.gz
-  - www/source/downloads/bio.zip
-  - www/source/images/infographics/biome-builder-architecture.png
-  - www/source/images/homepage/architecture-diagram.png

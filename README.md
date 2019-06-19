@@ -2,7 +2,12 @@
 
 This script helps you to refactor whole repositories by replacing all tokens using user defined dictionary.
 
-# How it works
+## ORDER
+
+**Dictionary order is important!**
+
+
+## How it works
 
 It uses provided dictionary and replaces each occurance of `term` with uniq `token` with each file name and file content. Then it replaces `token` with new `term`.
 This helps to modify or keep unmodified content from the most uniq `term` (better match) to general pattern.
@@ -35,9 +40,7 @@ And use new bio binary
 
 # Usage Example
 
-There example script - `patch-project.sh`. It shows how possible to make a "hard-update" of new changes. It reverts local changes in stage area, so you should be carefull and re-revert our changes back.
-If you want safer patch you should probably commit changes in the `$FORKMAN_PATCH_BRANCH` and cherry-pick them to `$FORKMAN_MAIN_BRANCH`.
+There example script - `patch-project.sh`. It shows how possible to make a "hard-update" of new changes. It reverts local changes, so you should be carefull.
+It takes `FORKMAN-UPSTREAM-BRANCH` branch and applies `forkman`. Then it resets to `FORKMAN_MAIN_BRANCH`, adds everything and commits. This emulates "manual project refactoring".
+If you satisfied with result you can merge this to your branch (or master).
 
-# ORDER
-
-**Dictionary order is important!**
