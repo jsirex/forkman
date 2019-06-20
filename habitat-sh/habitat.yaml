@@ -70,8 +70,6 @@ patterns:
   PLAN_CONTEXT\habitat: PLAN_CONTEXT\\habitat
   rootfs/hab: rootfs/hab
   FS_ROOT/hab: FS_ROOT/hab
-  pkg_svc_user=hab: pkg_svc_user=hab
-  'pkg_svc_user="hab"': 'pkg_svc_user="hab"'
 
   # Preserve path joining
   '            .join("hab")': '            .join("hab")'
@@ -89,32 +87,57 @@ patterns:
   'const HABITAT_SUBJECT: &str = "habitat";': 'const HABITAT_SUBJECT: &str = "habitat";'
   'let topic = "habitat".to_string();': 'let topic = "habitat".to_string();'
 
+  # Preserve habitat user for compatibility
+  'hab:x:42:42:root:/:/bin/sh': 'hab:x:42:42:root:/:/bin/sh'
+  'hab:x:42:hab': 'hab:x:42:hab'
+  'RUN useradd --user-group hab': 'RUN useradd --user-group hab'
+  'run_user="hab': 'run_user="hab'
 
-  # Add hab user into studio
-  'echo "${run_user}:x:42:42:root:/:/bin/sh" >> "$HAB_STUDIO_ROOT"/etc/passwd': |
-    echo "${run_user}:x:43:43:root:/:/bin/sh" >> "$HAB_STUDIO_ROOT"/etc/passwd
-      echo "hab:x:42:42:root:/:/bin/sh" >> "$HAB_STUDIO_ROOT"/etc/passwd
+  'svc_user=hab': 'svc_user=hab'
+  'svc_user="hab"': 'svc_user="hab"'
+  'svc_user = "hab"': 'svc_user = "hab"'
+  '"svc_user": "hab"': '"svc_user": "hab"'
 
-  # Add hab group into studio
-  'echo "${run_group}:x:42:${run_user}" >> "$HAB_STUDIO_ROOT"/etc/group': |
-    echo "${run_group}:x:43:${run_user}" >> "$HAB_STUDIO_ROOT"/etc/group
-      echo "hab:x:42:hab" >> "$HAB_STUDIO_ROOT"/etc/group
+  'user = \"hab\"': 'user = \"hab\"'
+  'Cow::Owned("hab".into())': 'Cow::Owned("hab".into())'
 
-  # Add hab user into docker studio:
-  'hab:x:42:42:root:/:/bin/sh': |
-    bio:x:43:43:root:/:/bin/sh
-    hab:x:42:42:root:/:/bin/sh
+  '/id -u hab': '/id -u hab'
+  'useradd hab': 'useradd hab'
+  'adduser hab': 'adduser hab'
+  'useradd --system --no-create-home hab': 'useradd --system --no-create-home hab'
+  'adduser --system hab': 'adduser --system hab'
+  '`hab` user': '`hab` user'
+  # This command, replace
+  'hab user key': 'bio user key'
+  'hab user help': 'bio user help'
+  # Otherwise preserve
+  'hab user': 'hab user'
+  'SVC_USER or SVC_GROUP is hab': 'SVC_USER or SVC_GROUP is hab'
+  'DEFAULT_USER: &str = "hab"': 'DEFAULT_USER: &str = "hab"'
+  'The user to run the service as. The default is hab.': 'The user to run the service as. The default is hab.'
+  '                           .unwrap_or_else(|| String::from("hab"));': '                           .unwrap_or_else(|| String::from("hab"));'
+  '("root", "hab")': '("root", "hab")'
+  '("hab", "hab")': '("hab", "hab")'
+  '("hab", "root")': '("hab", "root")'
+  '("hab", _)': '("hab", _)'
+  'EtcPasswdEntry::new("hab"': 'EtcPasswdEntry::new("hab"'
 
-  # Add hab group into docker studio:
-  'hab:x:42:hab': |
-    bio:x:43:bio
-    hab:x:42:hab
+  # Preserve habitat group for compatibility
+  'svc_group=hab': 'svc_group=hab'
+  'svc_group="hab"': 'svc_group="hab"'
+  'svc_group = "hab"': 'svc_group = "hab"'
+  '"svc_group": "hab"': '"svc_group": "hab"'
 
-  # tools / sup network
-  'RUN useradd --user-group hab': |
-    RUN useradd --user-group hab
-    RUN useradd --user-group bio
+  'groupadd --system hab': 'groupadd --system hab'
+  'addgroup --system hab': 'addgroup --system hab'
+  'hab group': 'hab group'
+  'DEFAULT_GROUP: &str = "hab"': 'DEFAULT_GROUP: &str = "hab"'
+  'The group to run the service as. The default is hab.': 'The group to run the service as. The default is hab.'
+  '                            .unwrap_or_else(|| String::from("hab"));': '                            .unwrap_or_else(|| String::from("hab"));'
+  'EtcGroupEntry::group_with_users("hab"': 'EtcGroupEntry::group_with_users("hab"'
+  'gid, &["hab"]': 'gid, &["hab"]'
 
+  'hab:hab': 'hab:hab'
 
   Habitat: Biome
   habitat: biome
@@ -151,7 +174,7 @@ patterns:
   hab\\cache: hab\\\\cache
   hab\\studios: hab\\\\studios
 
-  hab/hab: bio/bio
+  hab/hab: hab/hab
   ' hab ': ' bio '
 
   # Translate all habs beacause
