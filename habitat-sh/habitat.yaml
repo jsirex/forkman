@@ -48,10 +48,11 @@ patterns:
   pkg_path_for hab: pkg_path_for bio
 
   habirails: biorails
-  core/hab: biome/bio
-  core-hab: biome-bio
   core/hab hab: biome/bio bio
   hab --version: bio --version
+  core/hab: biome/bio
+  core\hab: biome\\bio
+  core-hab: biome-bio
   hab.exe: bio.exe
 
   ':habicat:': ':habicat:'
@@ -139,6 +140,7 @@ patterns:
 
   'hab:hab': 'hab:hab'
 
+  Chef Habitat: Biome
   Habitat: Biome
   habitat: biome
   habiat: biome
