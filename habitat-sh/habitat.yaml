@@ -15,6 +15,9 @@ patterns:
   github.com/habitat-sh/habitat/pull: github.com/habitat-sh/habitat/pull
   https://github.com/apps/habitat-builder: https://github.com/apps/habitat-builder
 
+  github.com/habitat-sh/habitat-operator/issues: github.com/habitat-sh/habitat-operator/issues
+  github.com/habitat-sh/habitat-operator/pull: github.com/habitat-sh/habitat-operator/pull
+
   # Currently don't touch bintray
   # https://api.bintray.com/content/habitat: https://api.bintray.com/content/habitat
   # https://api.bintray.com/packages/habitat: https://api.bintray.com/packages/habitat
@@ -55,12 +58,20 @@ patterns:
   core-hab: biome-bio
   hab.exe: bio.exe
 
+  https://habitat-sh.github.io/habitat-operator/helm/charts/stable: https://habitat-sh.github.io/habitat-operator/helm/charts/stable
+  habitat-operator: habitat-operator
+
   ':habicat:': ':habicat:'
   ':hab:': ':bio:'
 
   # Docker Studios (biome org has already taken. use biomesh)
   'const DOCKER_IMAGE: &str = "habitat/default-studio"': 'const DOCKER_IMAGE: &str = "biomesh/default-studio"'
   'const DOCKER_WINDOWS_IMAGE: &str = "habitat-docker-registry.bintray.io/win-studio"': 'const DOCKER_WINDOWS_IMAGE: &str = "biomesh/win-studio"'
+
+  'GITHUB_ORG := habitat-sh': 'GITHUB_ORG := biome-sh'
+  'DOCKER_ORG := habitat': 'DOCKER_ORG := biomesh'
+
+
   habitat/devshell: biomesh/devshell
 
   # Make plans use habitat
@@ -71,6 +82,7 @@ patterns:
   PLAN_CONTEXT\habitat: PLAN_CONTEXT\\habitat
   rootfs/hab: rootfs/hab
   FS_ROOT/hab: FS_ROOT/hab
+  'plan_path = "habitat"': 'plan_path = "habitat"'
 
   # Preserve path joining
   '            .join("hab")': '            .join("hab")'
@@ -252,3 +264,4 @@ excludes:
   - README.md
   - CHANGELOG.md
   - components/core/tests/fixtures/unhappyhumans-possums-8.1.4-20160427165340-x86_64-linux.hart
+  - CODE_OF_CONDUCT.md
