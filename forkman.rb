@@ -78,6 +78,8 @@ class ForkMan
 
   def translate_contents
     each_repo_file do |file|
+      next if File.symlink?(file)
+
       file_content = File.read(file)
       hash = file_content.hash
 
