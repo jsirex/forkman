@@ -66,7 +66,7 @@ patterns:
 
   # Docker Studios (biome org has already taken. use biomesh)
   'const DOCKER_IMAGE: &str = "habitat/default-studio"': 'const DOCKER_IMAGE: &str = "biomesh/default-studio"'
-  'const DOCKER_WINDOWS_IMAGE: &str = "habitat-docker-registry.bintray.io/win-studio"': 'const DOCKER_WINDOWS_IMAGE: &str = "biomesh/win-studio"'
+  'const DOCKER_WINDOWS_IMAGE: &str = "habitat/win-studio"': 'const DOCKER_WINDOWS_IMAGE: &str = "biomesh/win-studio"'
 
   'GITHUB_ORG := habitat-sh': 'GITHUB_ORG := biome-sh'
   'DOCKER_ORG := habitat': 'DOCKER_ORG := biomesh'
