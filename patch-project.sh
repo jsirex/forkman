@@ -47,7 +47,6 @@ popd > /dev/null
 
 echo "Applying forkman:"
 ruby forkman.rb --config "$FORKMAN_CONFIG" --repo "$FORKMAN_REPO"
-# ruby forkman.rb --config "$FORKMAN_CONFIG" --repo "$FORKMAN_REPO" --preserve-tokens --steps 105
 
 pushd "$FORKMAN_REPO" > /dev/null
 

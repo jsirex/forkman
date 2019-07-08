@@ -1,16 +1,16 @@
 # ForkMan
 
-This script helps you to refactor whole repositories by replacing all tokens using user defined dictionary.
+This script helps you to refactor whole repositories by replacing all tokens using a user defined dictionary.
 
 ## ORDER
 
 **Dictionary order is important!**
 
-
 ## How it works
 
-It uses provided dictionary and replaces each occurance of `term` with uniq `token` with each file name and file content. Then it replaces `token` with new `term`.
-This helps to modify or keep unmodified content from the most uniq `term` (better match) to general pattern.
+It uses the provided dictionary and replaces each occurance of `term` with unique `token` with each file name and file content. Then it replaces `token` with new `term`.
+
+This helps to modify or keep unmodified content from the most unique `term` (better match) to general pattern.
 
 ## Why not just sed?
 
@@ -40,7 +40,33 @@ And use new bio binary
 
 # Usage Example
 
-There example script - `patch-project.sh`. It shows how possible to make a "hard-update" of new changes. It reverts local changes, so you should be carefull.
-It takes `FORKMAN-UPSTREAM-BRANCH` branch and applies `forkman`. Then it resets to `FORKMAN_MAIN_BRANCH`, adds everything and commits. This emulates "manual project refactoring".
-If you satisfied with result you can merge this to your branch (or master).
+The example script `patch-project.sh` shows how it is possible to make a "hard-update" of new changes.
+
+It reverts local changes, so you should be careful. It takes `FORKMAN-UPSTREAM-BRANCH` branch and applies `forkman`. Then it resets to `FORKMAN_MAIN_BRANCH`, adds everything and commits.
+
+This emulates "manual project refactoring". If you satisfied with result you can merge this to your branch (or master).
+
+# Full example
+
+First ensure that you have forked the repository you want to operate on. (Eg: Fork habitat-sh/habitat to biome-sh/biome)
+
+Chome the new repository:
+
+```
+git clone https://github.com/biome-sh/biome.git
+```
+
+Add the upstream repository
+
+```
+cd biome
+git remote add habitat https://github.com/habitat-sh/habitat.git
+git remote update
+```
+
+Create a `forkman-raw` branch
+
+```
+git checkout -b forkman-raw habitat/master
+```
 
