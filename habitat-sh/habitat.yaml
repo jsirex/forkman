@@ -45,6 +45,18 @@ patterns:
   'if license_exists() ': 'if true '
   'license::check_for_license_acceptance_and_prompt(ui)?;': ''
 
+  # BLDR.TOML constants
+  components/launcher/habitat: components/launcher/habitat
+  components/builder-api-proxy/habitat: components/builder-api-proxy/habitat
+  components/builder-api/habitat: components/builder-api/habitat
+  components/builder-jobsrv/habitat: components/builder-jobsrv/habitat
+  components/builder-worker/habitat: components/builder-worker/habitat
+  components/builder-minio/habitat: components/builder-minio/habitat
+
+  # Dev Plans
+  /habitat-dev: /habitat-dev
+  "--exclude='habitat'": "--exclude='habitat'"
+
   # Translate constants
   pkg_origin=core: pkg_origin=biome
   pkg_name=hab: pkg_name=bio
@@ -152,6 +164,17 @@ patterns:
 
   'hab:hab': 'hab:hab'
 
+  # Mostly for builder
+  'initdb -U hab': 'initdb -U hab'
+  'psql -U hab': 'psql -U hab'
+  'user = "hab"': 'user = "hab"'
+  'all             hab': 'all             hab'
+  'replication     hab': 'replication     hab'
+  'user:                   String::from("hab")': 'user:                   String::from("hab")'
+  'useradd -r -U hab': 'useradd -r -U hab'
+  "name = 'hab'": "name = 'hab'"
+  "password = 'hab'": "password = 'hab'"
+
   Chef Habitat: Biome
   Habitat: Biome
   habitat: biome
@@ -167,6 +190,7 @@ patterns:
   hab/pkgs: hab/pkgs
   hab/cache: hab/cache
   hab/studios: hab/studios
+  ~/.hab: ~/.hab
 
   # Also windows
   hab\bin: hab\\bin
@@ -256,7 +280,6 @@ deletes:
 
   # Remove stock travis and other ci-s
   - .travis.yml
-  - .buildkite
   - .expeditor
 
 # Excludes from patching contents
