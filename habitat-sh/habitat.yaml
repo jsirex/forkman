@@ -30,6 +30,7 @@ patterns:
   habitat-sh/ipc-channel: habitat-sh/ipc-channel
   habitat-sh/nitox: habitat-sh/nitox
   habitat-sh/core-plans: habitat-sh/core-plans
+  habitat-sh/rust-nats: habitat-sh/rust-nats
 
   # Temporary stick with mine repo
   # https://github.com/habitat-sh/habitat: https://github.com/jsirex/biome
