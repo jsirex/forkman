@@ -111,6 +111,10 @@ patterns:
 
   # Supervisor compatibility habitat <-> biome
   'const HABITAT_SUBJECT: &str = "habitat";': 'const HABITAT_SUBJECT: &str = "habitat";'
+  'const SERVICE_STARTED_SUBJECT: &str = "habitat.event.service_started";': 'const SERVICE_STARTED_SUBJECT: &str = "habitat.event.service_started";'
+  'const SERVICE_STOPPED_SUBJECT: &str = "habitat.event.service_stopped";': 'const SERVICE_STOPPED_SUBJECT: &str = "habitat.event.service_stopped";'
+  'const SERVICE_UPDATE_STARTED_SUBJECT: &str = "habitat.event.service_update_started";': 'const SERVICE_UPDATE_STARTED_SUBJECT: &str = "habitat.event.service_update_started";'
+  'const HEALTHCHECK_SUBJECT: &str = "habitat.event.healthcheck";': 'const HEALTHCHECK_SUBJECT: &str = "habitat.event.healthcheck";'
   'let topic = "habitat".to_string();': 'let topic = "habitat".to_string();'
 
   # Preserve habitat user for compatibility
