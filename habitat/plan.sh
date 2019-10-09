@@ -54,6 +54,11 @@ ruby_wrapper() {
 
 # This is automatically generate wrapper for $pkg_name $pkg_version
 
+ENV['GEM_HOME'] = '$gem_path'
+ENV['GEM_PATH'] = '$gem_path'
+
+Gem::clear_paths
+
 # Make sure absolute path
 LIBDIRS = File.join('$gem_path', 'gems', '*','lib')
 
