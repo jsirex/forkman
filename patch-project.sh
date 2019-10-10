@@ -6,6 +6,12 @@ FORKMAN_UPSTREAM_BRANCH="$3"
 FORKMAN_MAIN_BRANCH="${4:-forkman-raw}"
 FORKMAN_PATCH_BRANCH="forkman-$(date +%F)"
 
+if command -v forkman; then
+    FORKMAN_CLI=forkman
+else
+    FORKMAN_CLI="ruby forkman.rb"
+fi
+
 if [ $# -eq 0 ]; then
     echo "Usage: $0 FORKMAN-CONFIG FORKMAN-REPO FORKMAN-UPSTREAM-BRANCH [FORKMAN-MAIN-BRANCH]"
     echo "FORKMAN-CONFIG: path to yaml config with replacement dictionary"
@@ -46,7 +52,7 @@ git checkout -B "$FORKMAN_PATCH_BRANCH" "$FORKMAN_UPSTREAM_BRANCH"
 popd > /dev/null
 
 echo "Applying forkman:"
-ruby forkman.rb --config "$FORKMAN_CONFIG" --repo "$FORKMAN_REPO"
+$FORKMAN_CLI --config "$FORKMAN_CONFIG" --repo "$FORKMAN_REPO"
 
 pushd "$FORKMAN_REPO" > /dev/null
 
