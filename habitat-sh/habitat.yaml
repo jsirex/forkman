@@ -32,11 +32,7 @@ patterns:
   habitat-sh/core-plans: habitat-sh/core-plans
   habitat-sh/rust-nats: habitat-sh/rust-nats
 
-  # Temporary stick with mine repo
-  # https://github.com/habitat-sh/habitat: https://github.com/jsirex/biome
-  # https://raw.githubusercontent.com/habitat-sh/habitat/: https://raw.githubusercontent.com/jsirex/biome/
-  # 'github.com:habitat-sh/habitat': 'github.com:jsirex/biome'
-  # Use our new org!
+  # Source code
   https://github.com/habitat-sh/habitat: https://github.com/biome-sh/biome
   https://raw.githubusercontent.com/habitat-sh/habitat/: https://raw.githubusercontent.com/biome-sh/biome/
   'github.com:habitat-sh/habitat': 'github.com:biome-sh/biome'
@@ -62,6 +58,7 @@ patterns:
 
   # Translate constants
   pkg_origin=core: pkg_origin=biome
+  '$pkg_origin = "core"': '$pkg_origin = "biome"'
   pkg_name=hab: pkg_name=bio
   pkg_path_for hab: pkg_path_for bio
 
@@ -93,6 +90,12 @@ patterns:
   habitat/plan.sh: habitat/plan.sh
   habitat/x86_64-darwin: habitat/x86_64-darwin
   habitat/plan.ps1: habitat/plan.ps1
+  habitat/hooks: habitat/hooks
+  habitat\hooks: habitat\\hooks
+  habitat/config: habitat/config
+  habitat\config: habitat\\config
+  habitat/default.toml: habitat/default.toml
+  habitat\default.toml: habitat\\default.toml
   PLAN_CONTEXT/habitat: PLAN_CONTEXT/habitat
   PLAN_CONTEXT\habitat: PLAN_CONTEXT\\habitat
   rootfs/hab: rootfs/hab
@@ -123,6 +126,17 @@ patterns:
   # Event protocol compatibility
   chef.habitat.supervisor.event: chef.habitat.supervisor.event
 
+  # builder compatibility
+  habitat-builder-artifact-store: habitat-builder-artifact-store
+
+  # Builder plan path compatibility (looks hacky, I know)
+  'default_plan_path() -> PathBuf { PathBuf::from("habitat")': 'default_plan_path() -> PathBuf { PathBuf::from("habitat")'
+  'p.ends_with("habitat")': 'p.ends_with("habitat")'
+  '        p.push("habitat");': '        p.push("habitat");'
+
+  # Builder DB compatibility
+  hab_client: hab_client
+
   # Preserve habitat user for compatibility
   'hab:x:42:42:root:/:/bin/sh': 'hab:x:42:42:root:/:/bin/sh'
   'hab:x:42:hab': 'hab:x:42:hab'
@@ -140,8 +154,14 @@ patterns:
   '/id -u hab': '/id -u hab'
   'useradd hab': 'useradd hab'
   'adduser hab': 'adduser hab'
+  'adduser --group hab': 'adduser --group hab'
+  'useradd -g hab hab': 'useradd -g hab hab'
   'useradd --system --no-create-home hab': 'useradd --system --no-create-home hab'
   'adduser --system hab': 'adduser --system hab'
+
+  "User 'hab' already exists": "User 'hab' already exists"
+  "Group 'hab' already exists": "Group 'hab' already exists"
+
   '`hab` user': '`hab` user'
   # This command, replace
   'hab user key': 'bio user key'
