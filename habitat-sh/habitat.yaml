@@ -45,6 +45,8 @@ patterns:
   'license::accept_license(ui)?;': ''
   'if license_exists() ': 'if true '
   'license::check_for_license_acceptance_and_prompt(ui)?;': ''
+  'https://brand.chef.io/images/habitat/logos': 'https://biome.sh/images/biome/logos'
+  'Copyright (c) 2016-2017 Chef Software Inc. and/or applicable contributors': 'Community fork of Chef Habitat'
 
   # BLDR.TOML constants
   components/launcher/habitat: components/launcher/habitat
@@ -100,6 +102,7 @@ patterns:
   # Preserve path joining
   '            .join("hab")': '            .join("hab")'
 
+  'ctx.bin_path().join("hab")': 'ctx.bin_path().join("bio")'
   'Path::new(&*FS_ROOT_PATH).join("hab")': 'Path::new(&*FS_ROOT_PATH).join("hab")'
   'PathBuf::from(&*FS_ROOT_PATH).join("hab")': 'PathBuf::from(&*FS_ROOT_PATH).join("hab")'
   'rootfs.join("hab")': 'rootfs.join("hab")'
@@ -116,6 +119,9 @@ patterns:
   'const SERVICE_UPDATE_STARTED_SUBJECT: &str = "habitat.event.service_update_started";': 'const SERVICE_UPDATE_STARTED_SUBJECT: &str = "habitat.event.service_update_started";'
   'const HEALTHCHECK_SUBJECT: &str = "habitat.event.healthcheck";': 'const HEALTHCHECK_SUBJECT: &str = "habitat.event.healthcheck";'
   'let topic = "habitat".to_string();': 'let topic = "habitat".to_string();'
+
+  # Event protocol compatibility
+  chef.habitat.supervisor.event: chef.habitat.supervisor.event
 
   # Preserve habitat user for compatibility
   'hab:x:42:42:root:/:/bin/sh': 'hab:x:42:42:root:/:/bin/sh'
@@ -281,15 +287,25 @@ deletes:
   - CONTRIBUTING.md
   - MAINTAINERS.md
   - RELEASE.md
+  - CODE_OF_CONDUCT.md
+  - CHANGELOG_FAKE.md
   - .github
+  - .mailmap
 
   # Remove stock travis and other ci-s
   - .travis.yml
   - .expeditor
+  - .buildkite
+  - tools/one-of-release
+  - e2e_local.sh
+  - e2e_local.ps1
+  - e2e_env
 
 # Excludes from patching contents
 excludes:
   - README.md
   - CHANGELOG.md
+  - LICENSE
+  - UX_PRINCIPLES.md
   - components/core/tests/fixtures/unhappyhumans-possums-8.1.4-20160427165340-x86_64-linux.hart
-  - CODE_OF_CONDUCT.md
+  - support/bash_completion.sh
