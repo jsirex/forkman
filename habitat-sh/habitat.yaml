@@ -59,6 +59,7 @@ patterns:
   # Translate constants
   pkg_origin=core: pkg_origin=biome
   '$pkg_origin = "core"': '$pkg_origin = "biome"'
+  '$pkg_origin="core"': '$pkg_origin="biome"'
   pkg_name=hab: pkg_name=bio
   pkg_path_for hab: pkg_path_for bio
 
