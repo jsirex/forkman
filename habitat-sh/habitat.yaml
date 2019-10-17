@@ -130,6 +130,9 @@ patterns:
   # builder compatibility
   habitat-builder-artifact-store: habitat-builder-artifact-store
 
+  # builder front
+  habKeysPipe: bioKeysPipe
+
   # Builder plan path compatibility (looks hacky, I know)
   'default_plan_path() -> PathBuf { PathBuf::from("habitat")': 'default_plan_path() -> PathBuf { PathBuf::from("habitat")'
   'p.ends_with("habitat")': 'p.ends_with("habitat")'
