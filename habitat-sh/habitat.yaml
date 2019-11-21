@@ -22,6 +22,9 @@ patterns:
   # https://api.bintray.com/content/habitat: https://api.bintray.com/content/habitat
   # https://api.bintray.com/packages/habitat: https://api.bintray.com/packages/habitat
 
+  # Chef Packages:
+  https://packages.chef.io/files/habitat/$version: https://github/biome-sh/biome/releases/download/bio-$version
+
   The Habitat Maintainers: The Biome Maintainers
   humans@habitat.sh: humans@biome.sh
 
@@ -43,6 +46,7 @@ patterns:
   'license::check_for_license_acceptance_and_prompt(ui)?;': ''
   'https://brand.chef.io/images/habitat/logos': 'https://biome.sh/images/biome/logos'
   'Copyright (c) 2016-2017 Chef Software Inc. and/or applicable contributors': 'Community fork of Chef Habitat'
+  'Copyright (c) 2016-2019 Chef Software Inc. and/or applicable contributors': 'Community fork of Chef Habitat'
 
   # BLDR.TOML constants
   components/launcher/habitat: components/launcher/habitat
@@ -324,6 +328,10 @@ deletes:
   - e2e_local.sh
   - e2e_local.ps1
   - e2e_env
+
+  # I don't know what is it
+  - manifest.json
+  - manifest.json.asc
 
 # Excludes from patching contents
 excludes:
