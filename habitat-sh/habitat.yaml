@@ -34,6 +34,7 @@ patterns:
   habitat-sh/nitox: habitat-sh/nitox
   habitat-sh/core-plans: habitat-sh/core-plans
   habitat-sh/rust-nats: habitat-sh/rust-nats
+  habitat-sh/prost: habitat-sh/prost
 
   # Source code
   https://github.com/habitat-sh/habitat: https://github.com/biome-sh/biome
