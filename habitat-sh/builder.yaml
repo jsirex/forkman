@@ -1,0 +1,347 @@
+---
+
+# This is copy of habitat.yaml but with a few difference I need, like deleting Cargo.toml
+
+# Most uniq patterns should go first
+# !!! ORDER IS IMPORTANT !!!
+patterns:
+
+  # Keep Original Sites
+  www.habitat.sh: www.habitat.sh
+  bldr.habitat.sh: bldr.habitat.sh
+  forums.habitat.sh: forums.habitat.sh
+  slack.habiat.sh: slack.habitat.sh
+
+  # Keep Original GitHub Issues, PRs, Apps
+  github.com/habitat-sh/habitat/issues: github.com/habitat-sh/habitat/issues
+  github.com/habitat-sh/habitat/pull: github.com/habitat-sh/habitat/pull
+  https://github.com/apps/habitat-builder: https://github.com/apps/habitat-builder
+
+  github.com/habitat-sh/habitat-operator/issues: github.com/habitat-sh/habitat-operator/issues
+  github.com/habitat-sh/habitat-operator/pull: github.com/habitat-sh/habitat-operator/pull
+
+  # Currently don't touch bintray
+  # https://api.bintray.com/content/habitat: https://api.bintray.com/content/habitat
+  # https://api.bintray.com/packages/habitat: https://api.bintray.com/packages/habitat
+
+  # Chef Packages:
+  https://packages.chef.io/files/habitat/$version: https://github/biome-sh/biome/releases/download/bio-$version
+
+  The Habitat Maintainers: The Biome Maintainers
+  humans@habitat.sh: humans@biome.sh
+
+  # Github Source
+  habitat-sh/rust-zmq: habitat-sh/rust-zmq
+  habitat-sh/ipc-channel: habitat-sh/ipc-channel
+  habitat-sh/nitox: habitat-sh/nitox
+  habitat-sh/core-plans: habitat-sh/core-plans
+  habitat-sh/rust-nats: habitat-sh/rust-nats
+  habitat-sh/prost: habitat-sh/prost
+
+  # Source code
+  https://github.com/habitat-sh/habitat: https://github.com/biome-sh/biome
+  https://raw.githubusercontent.com/habitat-sh/habitat/: https://raw.githubusercontent.com/biome-sh/biome/
+  'github.com:habitat-sh/habitat': 'github.com:biome-sh/biome'
+
+  # Remove chef licenses checks from OSS Version
+  'license::accept_license(ui)?;': ''
+  'if license_exists() ': 'if true '
+  'license::check_for_license_acceptance_and_prompt(ui)?;': ''
+  'https://brand.chef.io/images/habitat/logos': 'https://biome.sh/images/biome/logos'
+
+  # BLDR.TOML constants
+  components/launcher/habitat: components/launcher/habitat
+  components/builder-api-proxy/habitat: components/builder-api-proxy/habitat
+  components/builder-api/habitat: components/builder-api/habitat
+  components/builder-jobsrv/habitat: components/builder-jobsrv/habitat
+  components/builder-worker/habitat: components/builder-worker/habitat
+  components/builder-minio/habitat: components/builder-minio/habitat
+
+  # Dev Plans
+  /habitat-dev: /habitat-dev
+  "--exclude='habitat'": "--exclude='habitat'"
+
+  # Translate constants
+  pkg_origin=core: pkg_origin=biome
+  '$pkg_origin = "core"': '$pkg_origin = "biome"'
+  '$pkg_origin="core"': '$pkg_origin="biome"'
+  pkg_name=hab: pkg_name=bio
+  pkg_path_for hab: pkg_path_for bio
+
+  habirails: biorails
+  core/hab hab: biome/bio bio
+  hab --version: bio --version
+  core/hab: biome/bio
+  core\hab: biome\\bio
+  core-hab: biome-bio
+  hab.exe: bio.exe
+
+  https://habitat-sh.github.io/habitat-operator/helm/charts/stable: https://habitat-sh.github.io/habitat-operator/helm/charts/stable
+  habitat-operator: habitat-operator
+
+  ':habicat:': ':habicat:'
+  ':hab:': ':bio:'
+
+  # Docker Studios (biome org has already taken. use biomesh)
+  'const DOCKER_IMAGE: &str = "habitat/default-studio"': 'const DOCKER_IMAGE: &str = "biomesh/default-studio"'
+  'const DOCKER_WINDOWS_IMAGE: &str = "habitat/win-studio"': 'const DOCKER_WINDOWS_IMAGE: &str = "biomesh/win-studio"'
+
+  'GITHUB_ORG := habitat-sh': 'GITHUB_ORG := biome-sh'
+  'DOCKER_ORG := habitat': 'DOCKER_ORG := biomesh'
+
+
+  habitat/devshell: biomesh/devshell
+
+  # Make plans use habitat
+  habitat/plan.sh: habitat/plan.sh
+  habitat/x86_64-darwin: habitat/x86_64-darwin
+  habitat/plan.ps1: habitat/plan.ps1
+  habitat/hooks: habitat/hooks
+  habitat\hooks: habitat\\hooks
+  habitat/config: habitat/config
+  habitat\config: habitat\\config
+  habitat/default.toml: habitat/default.toml
+  habitat\default.toml: habitat\\default.toml
+  PLAN_CONTEXT/habitat: PLAN_CONTEXT/habitat
+  PLAN_CONTEXT\habitat: PLAN_CONTEXT\\habitat
+  rootfs/hab: rootfs/hab
+  FS_ROOT/hab: FS_ROOT/hab
+  'plan_path = "habitat"': 'plan_path = "habitat"'
+
+  # Preserve path joining
+  '            .join("hab")': '            .join("hab")'
+
+  'ctx.bin_path().join("hab")': 'ctx.bin_path().join("bio")'
+  'Path::new(&*FS_ROOT_PATH).join("hab")': 'Path::new(&*FS_ROOT_PATH).join("hab")'
+  'PathBuf::from(&*FS_ROOT_PATH).join("hab")': 'PathBuf::from(&*FS_ROOT_PATH).join("hab")'
+  'rootfs.join("hab")': 'rootfs.join("hab")'
+  'HAB_ROOT_PATH:=/hab': 'HAB_ROOT_PATH:=/hab'
+  'pub const ROOT_PATH: &str = "hab";': 'pub const ROOT_PATH: &str = "hab";'
+
+  # After replacement all occurances hab_pkgs_path will be bio_pkgs_path
+  'tar_builder.append_dir_all("hab", hab_pkgs_path);': 'tar_builder.append_dir_all("hab", bio_pkgs_path);'
+
+  # Supervisor compatibility habitat <-> biome
+  'const HABITAT_SUBJECT: &str = "habitat";': 'const HABITAT_SUBJECT: &str = "habitat";'
+  'const SERVICE_STARTED_SUBJECT: &str = "habitat.event.service_started";': 'const SERVICE_STARTED_SUBJECT: &str = "habitat.event.service_started";'
+  'const SERVICE_STOPPED_SUBJECT: &str = "habitat.event.service_stopped";': 'const SERVICE_STOPPED_SUBJECT: &str = "habitat.event.service_stopped";'
+  'const SERVICE_UPDATE_STARTED_SUBJECT: &str = "habitat.event.service_update_started";': 'const SERVICE_UPDATE_STARTED_SUBJECT: &str = "habitat.event.service_update_started";'
+  'const HEALTHCHECK_SUBJECT: &str = "habitat.event.healthcheck";': 'const HEALTHCHECK_SUBJECT: &str = "habitat.event.healthcheck";'
+  'let topic = "habitat".to_string();': 'let topic = "habitat".to_string();'
+
+  # Event protocol compatibility
+  chef.habitat.supervisor.event: chef.habitat.supervisor.event
+
+  # builder compatibility
+  habitat-builder-artifact-store: habitat-builder-artifact-store
+
+  # builder front
+  habKeysPipe: bioKeysPipe
+
+  # Builder plan path compatibility (looks hacky, I know)
+  'default_plan_path() -> PathBuf { PathBuf::from("habitat")': 'default_plan_path() -> PathBuf { PathBuf::from("habitat")'
+  'p.ends_with("habitat")': 'p.ends_with("habitat")'
+  '        p.push("habitat");': '        p.push("habitat");'
+
+  # Builder DB compatibility
+  hab_client: hab_client
+
+  # Preserve habitat user for compatibility
+  'hab:x:42:42:root:/:/bin/sh': 'hab:x:42:42:root:/:/bin/sh'
+  'hab:x:42:hab': 'hab:x:42:hab'
+  'RUN useradd --user-group hab': 'RUN useradd --user-group hab'
+  'run_user="hab': 'run_user="hab'
+
+  'svc_user=hab': 'svc_user=hab'
+  'svc_user="hab"': 'svc_user="hab"'
+  'svc_user = "hab"': 'svc_user = "hab"'
+  '"svc_user": "hab"': '"svc_user": "hab"'
+
+  'user = \"hab\"': 'user = \"hab\"'
+  'Cow::Owned("hab".into())': 'Cow::Owned("hab".into())'
+
+  '/id -u hab': '/id -u hab'
+  'useradd hab': 'useradd hab'
+  'adduser hab': 'adduser hab'
+  'adduser --group hab': 'adduser --group hab'
+  'useradd -g hab hab': 'useradd -g hab hab'
+  'useradd --system --no-create-home hab': 'useradd --system --no-create-home hab'
+  'adduser --system hab': 'adduser --system hab'
+
+  "User 'hab' already exists": "User 'hab' already exists"
+  "Group 'hab' already exists": "Group 'hab' already exists"
+
+  '`hab` user': '`hab` user'
+  # This command, replace
+  'hab user key': 'bio user key'
+  'hab user help': 'bio user help'
+  # Otherwise preserve
+  'hab user': 'hab user'
+  'SVC_USER or SVC_GROUP is hab': 'SVC_USER or SVC_GROUP is hab'
+  'DEFAULT_USER: &str = "hab"': 'DEFAULT_USER: &str = "hab"'
+  'The user to run the service as. The default is hab.': 'The user to run the service as. The default is hab.'
+  '                           .unwrap_or_else(|| String::from("hab"));': '                           .unwrap_or_else(|| String::from("hab"));'
+  '("root", "hab")': '("root", "hab")'
+  '("hab", "hab")': '("hab", "hab")'
+  '("hab", "root")': '("hab", "root")'
+  '("hab", _)': '("hab", _)'
+  'EtcPasswdEntry::new("hab"': 'EtcPasswdEntry::new("hab"'
+
+  # Preserve habitat group for compatibility
+  'svc_group=hab': 'svc_group=hab'
+  'svc_group="hab"': 'svc_group="hab"'
+  'svc_group = "hab"': 'svc_group = "hab"'
+  '"svc_group": "hab"': '"svc_group": "hab"'
+
+  'groupadd --system hab': 'groupadd --system hab'
+  'addgroup --system hab': 'addgroup --system hab'
+  'hab group': 'hab group'
+  'DEFAULT_GROUP: &str = "hab"': 'DEFAULT_GROUP: &str = "hab"'
+  'The group to run the service as. The default is hab.': 'The group to run the service as. The default is hab.'
+  '                            .unwrap_or_else(|| String::from("hab"));': '                            .unwrap_or_else(|| String::from("hab"));'
+  'EtcGroupEntry::group_with_users("hab"': 'EtcGroupEntry::group_with_users("hab"'
+  'gid, &["hab"]': 'gid, &["hab"]'
+
+  'hab:hab': 'hab:hab'
+
+  # Mostly for builder
+  'initdb -U hab': 'initdb -U hab'
+  'psql -U hab': 'psql -U hab'
+  'user = "hab"': 'user = "hab"'
+  'all             hab': 'all             hab'
+  'replication     hab': 'replication     hab'
+  'user:                   String::from("hab")': 'user:                   String::from("hab")'
+  'useradd -r -U hab': 'useradd -r -U hab'
+  "name = 'hab'": "name = 'hab'"
+  "password = 'hab'": "password = 'hab'"
+
+  Chef Habitat: Biome
+  Habitat: Biome
+  habitat: biome
+  habiat: biome
+  Habiat: Biome
+
+  # Make some biome path compatible
+  hab/bin: hab/bin
+  hab/etc: hab/etc
+  hab/launcher: hab/launcher
+  hab/sup: hab/sup
+  hab/svc: hab/svc
+  hab/pkgs: hab/pkgs
+  hab/cache: hab/cache
+  hab/studios: hab/studios
+  ~/.hab: ~/.hab
+
+  # Also windows
+  hab\bin: hab\\bin
+  hab\etc: hab\\etc
+  hab\launcher: hab\\launcher
+  hab\sup: hab\\sup
+  hab\svc: hab\\svc
+  hab\pkgs: hab\\pkgs
+  hab\cache: hab\\cache
+  hab\studios: hab\\studios
+
+  # Double slash in quotes translate too
+  hab\\bin: hab\\\\bin
+  hab\\etc: hab\\\\etc
+  hab\\launcher: hab\\\\launcher
+  hab\\sup: hab\\\\sup
+  hab\\svc: hab\\\\svc
+  hab\\pkgs: hab\\\\pkgs
+  hab\\cache: hab\\\\cache
+  hab\\studios: hab\\\\studios
+
+  hab/hab: hab/hab
+  ' hab ': ' bio '
+
+  # Translate all habs beacause
+  # Replacing hab -> bio is danger (word `unreachable` will be `unreacbiole` )
+  hab/: bio/
+  hab\: bio\\
+  hab\\: bio\\\\
+
+  # Assigments
+  =hab: =bio
+  hab=: bio=
+  '= hab': '= bio'
+  'hab =': 'bio ='
+  '= "hab"': '= "bio"'
+
+  # Relative path
+  ../hab: ../bio
+
+  # Variables
+  _hab: _bio
+  hab_: bio_
+  -hab: -bio
+  hab-: bio-
+  '&hab': '&bio'
+  '$hab': '$bio'
+  '${hab}': '${bio}'
+
+  /hab: /bio
+  bin/hab: bin/bio
+  'use hab': 'use bio'
+  'hab::': 'bio::'
+
+  # String occurances
+  '"hab"': '"bio"'
+  "'hab'": "'bio'"
+  ' hab': ' bio'
+  # Not always works somewhy?
+  '`hab': '`bio'
+
+
+  'hab ': 'bio '
+
+  'hab:': 'bio:'
+  hab\: bio\\
+  \hab: \\bio
+  ':hab': ':bio'
+  '[hab]': '[bio]'
+  .hab: .bio
+
+# Delete some files which safe to ignore
+deletes:
+  # We're not going to support public site now
+  - www
+
+  # Silence mentions
+  - .mailmap
+  - .mention-bot
+  - CODEOWNERS
+
+  # Development will go in upstream
+  - CONTRIBUTING.md
+  - MAINTAINERS.md
+  - RELEASE.md
+  - CODE_OF_CONDUCT.md
+  - CHANGELOG_FAKE.md
+  - .github
+  - .mailmap
+
+  # Remove stock travis and other ci-s
+  - .travis.yml
+  - .expeditor
+  - .buildkite
+  - tools/one-of-release
+  - e2e_local.sh
+  - e2e_local.ps1
+  - e2e_env
+
+  # I don't know what is it
+  - manifest.json
+  - manifest.json.asc
+
+  # Cargo.lock is wrong for us
+  - Cargo.lock
+
+# Excludes from patching contents
+excludes:
+  - README.md
+  - CHANGELOG.md
+  - LICENSE
+  - UX_PRINCIPLES.md
+  - components/core/tests/fixtures/unhappyhumans-possums-8.1.4-20160427165340-x86_64-linux.hart
+  - support/bash_completion.sh
