@@ -35,6 +35,7 @@ patterns:
   habitat-sh/core-plans: habitat-sh/core-plans
   habitat-sh/rust-nats: habitat-sh/rust-nats
   habitat-sh/prost: habitat-sh/prost
+  habitat-sh/retry: habitat-sh/retry
 
   # Source code
   https://github.com/habitat-sh/habitat: https://github.com/biome-sh/biome
