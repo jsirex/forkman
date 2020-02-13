@@ -76,6 +76,7 @@ patterns:
   core\hab: biome\\bio
   core-hab: biome-bio
   hab.exe: bio.exe
+  core/windows-service: biome/windows-service
 
   https://habitat-sh.github.io/habitat-operator/helm/charts/stable: https://habitat-sh.github.io/habitat-operator/helm/charts/stable
   habitat-operator: habitat-operator
