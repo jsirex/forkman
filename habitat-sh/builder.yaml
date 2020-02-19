@@ -223,6 +223,23 @@ patterns:
   habiat: biome
   Habiat: Biome
 
+  # Convert paths explicitly
+  cli/hab/bldr: cli/bio/bldr
+  cli/hab/cli: cli/bio/cli
+  cli/hab/config: cli/bio/config
+  cli/hab/file: cli/bio/file
+  cli/hab/license: cli/bio/license
+  cli/hab/origin: cli/bio/origin
+  cli/hab/pkg: cli/bio/pkg
+  cli/hab/plan: cli/bio/plan
+  cli/hab/ring: cli/bio/ring
+  cli/hab/studio: cli/bio/studio
+  cli/hab/sup: cli/bio/sup
+  cli/hab/svc: cli/bio/svc
+  cli/hab/tests: cli/bio/tests
+  cli/hab/user: cli/bio/user
+  cli/hab/util: cli/bio/util
+
   # Make some biome path compatible
   hab/bin: hab/bin
   hab/etc: hab/etc
