@@ -37,7 +37,7 @@ if [ -z "$FORKMAN_UPSTREAM_BRANCH" ]; then
     exit 1
 fi
 
-echo "WARN: Resseting index and HEAD. Press enter to continue or CTRL+C to abort"
+echo "WARN: Reseting index and HEAD. Press enter to continue or CTRL+C to abort"
 read
 
 pushd "$FORKMAN_REPO" > /dev/null

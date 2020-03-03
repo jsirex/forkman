@@ -40,7 +40,7 @@ And use new bio binary
 
 # Usage Example
 
-The example script `patch-project.sh` shows how it is possible to make a "hard-update" of new changes.
+The example script [patch project example script](examples/patch-project.sh) shows how it is possible to make a "hard-update" of new changes.
 
 It reverts local changes, so you should be careful. It takes `FORKMAN-UPSTREAM-BRANCH` branch and applies `forkman`. Then it resets to `FORKMAN_MAIN_BRANCH`, adds everything and commits.
 
@@ -50,13 +50,13 @@ This emulates "manual project refactoring". If you satisfied with result you can
 
 First ensure that you have forked the repository you want to operate on. (Eg: Fork habitat-sh/habitat to biome-sh/biome)
 
-Chome the new repository:
+Clone a repository:
 
 ```
 git clone https://github.com/biome-sh/biome.git
 ```
 
-Add the upstream repository
+Add an upstream repository
 
 ```
 cd biome

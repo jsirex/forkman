@@ -1,6 +1,6 @@
 # shellcheck shell=bash
 
-pkg_origin=ya
+pkg_origin=jsirex
 pkg_name=forkman
 pkg_version="0.1.0"
 
