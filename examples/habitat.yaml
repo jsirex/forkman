@@ -343,9 +343,10 @@ deletes:
   - .expeditor
   - .buildkite
   - tools/one-of-release
-  - e2e_local.sh
-  - e2e_local.ps1
   - e2e_env
+  - e2e_local.ps1
+  - e2e_local_raw_command.sh
+  - e2e_local.sh
 
   # I don't know what is it
   - manifest.json

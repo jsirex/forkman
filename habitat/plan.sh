@@ -2,7 +2,7 @@
 
 pkg_origin=jsirex
 pkg_name=forkman
-pkg_version="0.1.0"
+pkg_version="0.2.0"
 
 pkg_description="Repository Fork Manager"
 pkg_maintainer="Yauhen Artsiukhou <jsirex@gmail.com>"
@@ -10,6 +10,7 @@ pkg_license=("MIT")
 
 pkg_deps=(
     core/file
+    core/bash
     core/ruby
 )
 
@@ -39,6 +40,8 @@ do_install() {
     cp forkman.rb "${pkg_prefix}/lib"
 
     ruby_wrapper
+    install forkman-patch-git "${pkg_prefix}/bin"
+    fix_interpreter "${pkg_prefix}/bin/forkman-patch-git" core/bash bin/bash
 }
 
 # Wraps regular ruby script according to current GEM_HOME with appropriate LOAD_PATH

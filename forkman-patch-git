@@ -1,0 +1,76 @@
+#!/bin/bash -e
+
+FORKMAN_CONFIG=".forkman.yaml"
+FORKMAN_UPSTREAM_BRANCH="upstream/master"
+FORKMAN_MAIN_BRANCH="forkman-raw"
+FORKMAN_PATCH_BRANCH="forkman-$(date +%F)"
+
+
+while getopts 'c:u:m:h' flag; do
+    case "${flag}" in
+        c) FORKMAN_CONFIG="${OPTARG}" ;;
+        u) FORKMAN_UPSTREAM_BRANCH="${OPTARG}" ;;
+        m) FORKMAN_MAIN_BRANCH="${OPTARG}" ;;
+        *)
+            echo "Usage:"
+            echo "$0 [-c FORKMAN_CONFIG] [-u FORKMAN_UPSTREAM_BRANCH] [-m FORKMAN_MAIN_BRANCH]"
+            echo "  -c FORKMAN_CONFIG           Path to a yaml dictionary. Default: .forkman.yaml"
+            echo "  -u FORKMAN_UPSTREAM_BRANCH  An upstream branch to patch. Default: upstream/master"
+            echo "  -m FORKMAN_MAIN_BRANCH      Branch with patches. Default: forkman-raw"
+            echo ""
+            echo "Run patch from root of a git repository:"
+            echo "Do not modify FORKMAN_MAIN_BRANCH branch. Just keep and update it forever."
+            exit 1
+            ;;
+    esac
+done
+
+
+if [ ! -f "$FORKMAN_CONFIG" ]; then
+    echo "Config was not found: $FORKMAN_CONFIG"
+    exit 1
+fi
+
+if [ ! -d ".git" ]; then
+    echo "Not in root of a git repository: $(pwd)"
+    exit 1
+fi
+
+if [ -z "$FORKMAN_UPSTREAM_BRANCH" ]; then
+    echo "Upstream branch should not be empty"
+    echo "Usually it should look like upstream/master"
+    exit 1
+fi
+
+# You likely have committed your .forkman.yaml so before switch we should preserve it outside
+FORKMAN_TMP_CONFIG="$(mktemp -t forkman.XXXX)"
+cp "$FORKMAN_CONFIG" "$FORKMAN_TMP_CONFIG"
+
+echo "WARN: Reseting index and HEAD. Press enter to continue or CTRL+C to abort"
+read
+
+echo "Resetting index and cleaning"
+git reset --hard HEAD
+git clean -fdx
+
+# echo "Making patch branch: $FORKMAN_PATCH_BRANCH"
+git checkout -B "$FORKMAN_PATCH_BRANCH" "$FORKMAN_UPSTREAM_BRANCH"
+
+echo "Applying forkman:"
+forkman --config "$FORKMAN_TMP_CONFIG" --repo .
+
+echo "Rework patches on main branch: $FORKMAN_MAIN_BRANCH"
+echo "WARN: This branch is expected to keep clean and raw"
+git reset "$FORKMAN_MAIN_BRANCH"
+
+echo "We are on clean state so safe to add literally everything"
+git add .
+
+git commit -m "Backport $FORKMAN_UPSTREAM_BRANCH at $(git rev-parse "$FORKMAN_UPSTREAM_BRANCH")"
+git checkout "$FORKMAN_MAIN_BRANCH"
+
+# Should be always fast-forward
+git merge --ff-only "$FORKMAN_PATCH_BRANCH"
+git branch -D "$FORKMAN_PATCH_BRANCH"
+
+echo "$FORKMAN_MAIN_BRANCH was built."
