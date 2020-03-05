@@ -51,7 +51,7 @@ read
 
 echo "Resetting index and cleaning"
 git reset --hard HEAD
-git clean -fdx
+git clean -fd
 
 # echo "Making patch branch: $FORKMAN_PATCH_BRANCH"
 git checkout -B "$FORKMAN_PATCH_BRANCH" "$FORKMAN_UPSTREAM_BRANCH"
