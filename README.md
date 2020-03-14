@@ -97,6 +97,34 @@ EOF
 Create a `forkman-raw` branch:
 
 ```
-git checkout -b forkman-raw habitat/master
+git branch forkman-raw habitat/master
+git push origin forkman-raw
 ```
 
+Install `forkman` using native way:
+
+```
+# install ruby
+gem install bundler
+bundle install
+```
+
+or via `habitat`/`biome`:
+
+```
+# Habitat
+sudo hab pkg install -fb jsirex/forkman
+
+# Biome
+sudo bio pkg install -fb jsirex/forkman
+```
+
+Run patches:
+
+```
+forkman-patch-git -u habitat/master
+```
+
+# Tip
+
+First patch on existing project will be huge and requires lots of your attention, but if you're using `forkman-patch-git` any further run will show only diffs related to a new code or dictionary changes.
