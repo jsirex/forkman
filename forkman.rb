@@ -43,16 +43,11 @@ class ForkMan
     config[:excludes] = yaml['excludes'] || []
     config[:deletes] = yaml['deletes'] || []
 
-    # We will calculate statistic of replacement to indicated outdated rules
-    config[:stats] = Hash.new(0)
-
     Dir.chdir(config[:repo]) do
       FileUtils.rm_rf(config[:deletes]) unless config[:deletes].empty?
       translate_filenames
       translate_contents
     end
-
-    print_gsub_statistics
 
     word, translate = config[:patterns][config[:steps] - 1]
     puts "Last applied: #{word} -> #{translate}."
@@ -64,7 +59,7 @@ class ForkMan
 
       # We must tokenize all pattern BEFORE replace it with new text
       each_dict_pattern do |word, translate, token|
-        config[:stats][word] += 1 if new_file.gsub!(word, token)
+        new_file.gsub!(word, token)
       end
 
       # After all tokens have been generated it is time to translate
@@ -90,7 +85,7 @@ class ForkMan
 
       # We must tokenize all pattern BEFORE replace it with new text
       each_dict_pattern do |word, translate, token|
-        config[:stats][word] += 1 if file_content.gsub!(word, token)
+        file_content.gsub!(word, token)
       end
 
       # After all tokens have been generated it is time to translate
@@ -128,20 +123,6 @@ class ForkMan
       else
         yield(pattern[0], pattern[1], token)
       end
-    end
-  end
-
-  def print_gsub_statistics
-    unused_patterns = config[:patterns].map {|x| x[0] } - config[:stats].keys
-
-    puts "\n\n\nUnused patterns are:"
-    unused_patterns.each do |pattern|
-      puts "\t#{pattern}"
-    end
-
-    puts "\n\n\nPatterns hit statistics (>10):"
-    config[:stats].each_pair do |pattern, count|
-      puts "\t#{pattern}: #{count}" if count > 10
     end
   end
 end
