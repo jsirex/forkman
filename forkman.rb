@@ -102,7 +102,7 @@ class ForkMan
 
   def each_repo_file
     Dir.glob('**/*', File::FNM_DOTMATCH) do |file|
-      next if file =~ /^.git/
+      next if file =~ /^.git$/
       next if File.directory?(file)
 
       next if config[:excludes].include?(file)
