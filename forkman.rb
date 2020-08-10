@@ -60,11 +60,17 @@ class ForkMan
       # We must tokenize all pattern BEFORE replace it with new text
       each_dict_pattern do |word, translate, token|
         new_file.gsub!(word, token)
+      rescue e
+        puts "Error translating: #{word}"
+        puts e
       end
 
       # After all tokens have been generated it is time to translate
       each_dict_pattern do |word, translate, token|
         new_file.gsub!(token, translate)
+      rescue e
+        puts "Error translating: #{translate}"
+        puts e
       end
 
       next if new_file == file
@@ -86,11 +92,17 @@ class ForkMan
       # We must tokenize all pattern BEFORE replace it with new text
       each_dict_pattern do |word, translate, token|
         file_content.gsub!(word, token)
+       rescue e
+        puts "Error translating: #{word}"
+        puts e
       end
 
       # After all tokens have been generated it is time to translate
       each_dict_pattern do |word, translate, token|
         file_content.gsub!(token, translate)
+       rescue e
+        puts "Error translating: #{translate}"
+        puts e
       end
 
       next if hash == file_content.hash
