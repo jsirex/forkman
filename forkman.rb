@@ -62,7 +62,7 @@ class ForkMan
         new_file.gsub!(word, token)
       rescue e
         puts "Error translating: #{word}"
-        puts e
+        raise e
       end
 
       # After all tokens have been generated it is time to translate
@@ -70,7 +70,7 @@ class ForkMan
         new_file.gsub!(token, translate)
       rescue e
         puts "Error translating: #{translate}"
-        puts e
+        raise e
       end
 
       next if new_file == file
@@ -94,7 +94,7 @@ class ForkMan
         file_content.gsub!(word, token)
        rescue e
         puts "Error translating: #{word}"
-        puts e
+        raise e
       end
 
       # After all tokens have been generated it is time to translate
@@ -102,7 +102,7 @@ class ForkMan
         file_content.gsub!(token, translate)
        rescue e
         puts "Error translating: #{translate}"
-        puts e
+        raise e
       end
 
       next if hash == file_content.hash
