@@ -6,17 +6,19 @@ FORKMAN_MAIN_BRANCH="forkman-raw"
 FORKMAN_PATCH_BRANCH="forkman-$(date +%F)"
 
 
-while getopts 'c:u:m:h' flag; do
+while getopts 'c:u:m:hb' flag; do
     case "${flag}" in
         c) FORKMAN_CONFIG="${OPTARG}" ;;
         u) FORKMAN_UPSTREAM_BRANCH="${OPTARG}" ;;
         m) FORKMAN_MAIN_BRANCH="${OPTARG}" ;;
+        b) FORKMAN_BATCH_MODE="y" ;;
         *)
             echo "Usage:"
             echo "$0 [-c FORKMAN_CONFIG] [-u FORKMAN_UPSTREAM_BRANCH] [-m FORKMAN_MAIN_BRANCH]"
             echo "  -c FORKMAN_CONFIG           Path to a yaml dictionary. Default: .forkman.yaml"
             echo "  -u FORKMAN_UPSTREAM_BRANCH  An upstream branch to patch. Default: upstream/master"
             echo "  -m FORKMAN_MAIN_BRANCH      Branch with patches. Default: forkman-raw"
+            echo "  -b                          Run without asking questions"
             echo ""
             echo "Run patch from root of a git repository:"
             echo "Do not modify FORKMAN_MAIN_BRANCH branch. Just keep and update it forever."
@@ -46,8 +48,10 @@ fi
 FORKMAN_TMP_CONFIG="$(mktemp -t forkman.XXXX)"
 cp "$FORKMAN_CONFIG" "$FORKMAN_TMP_CONFIG"
 
-echo "WARN: Reseting index and HEAD. Press enter to continue or CTRL+C to abort"
-read
+if [ -z "$FORKMAN_BATCH_MODE" ]; then
+    echo "WARN: Reseting index and HEAD. Press enter to continue or CTRL+C to abort"
+    read
+fi
 
 echo "Resetting index and cleaning"
 git reset --hard HEAD
