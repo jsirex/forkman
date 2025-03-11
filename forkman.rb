@@ -57,7 +57,7 @@ class ForkMan
     each_repo_file do |file|
       new_file = file.dup
 
-      # We must tokenize all pattern BEFORE replace it with new text
+      # We must tokenize all patterns BEFORE replace them with a new text
       each_dict_pattern do |word, translate, token|
         new_file.gsub!(word, token)
       rescue => e

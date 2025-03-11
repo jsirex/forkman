@@ -2,7 +2,7 @@
 
 pkg_origin=jsirex
 pkg_name=forkman
-pkg_version="0.2.1"
+pkg_version="0.2.2"
 
 pkg_description="Repository Fork Manager"
 pkg_maintainer="Yauhen Artsiukhou <jsirex@gmail.com>"
@@ -11,10 +11,11 @@ pkg_license=("MIT")
 pkg_deps=(
     core/file
     core/bash
-    core/ruby
+    core/ruby3_4
 )
 
 pkg_build_deps=(
+    core/file
     core/gcc
     core/make
 )
@@ -22,7 +23,7 @@ pkg_build_deps=(
 pkg_bin_dirs=(bin)
 
 do_prepare() {
-    bundle config build.ruby-filemagic --with-magic-dir="$(pkg_path_for core/file)"
+    bundle config set --global build.ruby-filemagic --with-magic-dir="$(pkg_path_for core/file)"
 
     # shellcheck disable=SC2154
     cp -v Gemfile "$CACHE_PATH/Gemfile.biome"
@@ -47,8 +48,8 @@ do_install() {
 # Wraps regular ruby script according to current GEM_HOME with appropriate LOAD_PATH
 ruby_wrapper() {
     # shellcheck disable=SC2155
-    local ruby_path="$(pkg_path_for core/ruby)/bin/ruby"
-    local gem_path="$pkg_prefix/rubygems/ruby/2.5.0"
+    local ruby_path="$(pkg_path_for core/ruby3_4)/bin/ruby"
+    local gem_path="$pkg_prefix/rubygems/ruby/3.4.0+0"
     local cli_path="$pkg_prefix/lib/forkman.rb"
     local cli_name="forkman"
 
