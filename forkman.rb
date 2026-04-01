@@ -2,6 +2,7 @@ require 'mixlib/cli'
 require 'yaml'
 require 'fileutils'
 require 'filemagic'
+require 'securerandom'
 
 STDOUT.sync = true
 
@@ -11,28 +12,33 @@ class ForkMan
   banner "#{__FILE__} (options)"
 
   option :config,
-    long: '--config YAML',
-    required: true,
-    proc: ->(x) { File.expand_path(x) },
-    description: 'YAML-based configuration file'
+         long: '--config YAML',
+         required: true,
+         proc: ->(x) { File.expand_path(x) },
+         description: 'YAML-based configuration file'
 
   option :repo,
-    long: '--repo DIR',
-    required: true,
-    proc: ->(x) { File.expand_path(x) },
-    description: 'Directory with GIT project'
+         long: '--repo DIR',
+         required: true,
+         proc: ->(x) { File.expand_path(x) },
+         description: 'Directory with GIT project'
 
   option :steps,
-    long: '--steps NUM',
-    default: 1_000_000,
-    proc: ->(x) { Integer(x) },
-    description: 'How many patterns to apply. Default: 1_000_000'
+         long: '--steps NUM',
+         default: 1_000_000,
+         proc: ->(x) { Integer(x) },
+         description: 'How many patterns to apply. Default: 1_000_000'
 
   option :preserve_tokens,
-    long: '--[no-]preserve-tokens',
-    boolean: true,
-    default: false,
-    description: 'Stop translating and leave tokens'
+         long: '--[no-]preserve-tokens',
+         boolean: true,
+         default: false,
+         description: 'Stop translating and leave tokens'
+
+  option :token_prefix,
+         long: '--token-prefix PREFIX',
+         default: SecureRandom.hex(8),
+         description: 'Unique token marker to prevent collisions. Default: (generated)'
 
   def run
     parse_options
@@ -58,17 +64,17 @@ class ForkMan
       new_file = file.dup
 
       # We must tokenize all patterns BEFORE replace them with a new text
-      each_dict_pattern do |word, translate, token|
+      each_dict_pattern do |word, _translate, token|
         new_file.gsub!(word, token)
-      rescue => e
+      rescue StandardError => e
         puts "[#{file}] Error tokinization: #{word}"
         raise e
       end
 
       # After all tokens have been generated it is time to translate
-      each_dict_pattern do |word, translate, token|
+      each_dict_pattern do |_word, translate, token|
         new_file.gsub!(token, translate)
-      rescue => e
+      rescue StandardError => e
         puts "[#{file}] Error translating: #{translate}"
         raise e
       end
@@ -90,17 +96,17 @@ class ForkMan
       hash = file_content.hash
 
       # We must tokenize all pattern BEFORE replace it with new text
-      each_dict_pattern do |word, translate, token|
+      each_dict_pattern do |word, _translate, token|
         file_content.gsub!(word, token)
-      rescue => e
+      rescue StandardError => e
         puts "[#{file}] Error tokinization: #{word}"
         raise e
       end
 
       # After all tokens have been generated it is time to translate
-      each_dict_pattern do |word, translate, token|
+      each_dict_pattern do |_word, translate, token|
         file_content.gsub!(token, translate)
-      rescue => e
+      rescue StandardError => e
         puts "[#{file}] Error translating: #{translate}"
         raise e
       end
@@ -114,7 +120,7 @@ class ForkMan
 
   def each_repo_file
     Dir.glob('**/*', File::FNM_DOTMATCH) do |file|
-      next if file =~ %r|^.git/|
+      next if file =~ %r{^.git/}
       next if File.directory?(file)
 
       next if config[:excludes].include?(file)
@@ -127,7 +133,7 @@ class ForkMan
     config[:patterns].each_with_index do |pattern, index|
       return if index >= config[:steps]
 
-      token = "TOKEN_%07d" % index
+      token = '%s-%07d' % [config[:token_prefix], index]
 
       # For debug preserve tokens otherwise - replace
       if config[:preserve_tokens]
