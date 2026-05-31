@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require 'mixlib/cli'
 require 'yaml'
 require 'fileutils'

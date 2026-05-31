@@ -2,7 +2,7 @@
 
 pkg_origin=jsirex
 pkg_name=forkman
-pkg_version="0.2.2"
+pkg_version="0.3.1"
 
 pkg_description="Repository Fork Manager"
 pkg_maintainer="Yauhen Artsiukhou <jsirex@gmail.com>"
